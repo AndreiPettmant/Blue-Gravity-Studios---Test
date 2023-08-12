@@ -38,6 +38,8 @@ public class DialogueManager : MonoBehaviour
 
     public IEnumerator StartDialogue()
     {
+        GameManager.SetGameStatus(GameStatus.Dialogue);
+
         if (playerSpeakingFirst)
         {
             speechBubblePlayerAnimator.SetTrigger("Open");
@@ -59,7 +61,6 @@ public class DialogueManager : MonoBehaviour
             playerDialogueText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
-        
         playerContinueButton.SetActive(true);
     }
 
@@ -70,7 +71,6 @@ public class DialogueManager : MonoBehaviour
             npcDialogueText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
-        
         npcDialogueButton.SetActive(true);
     }
 
@@ -134,6 +134,8 @@ public class DialogueManager : MonoBehaviour
         {
             npcDialogueText.text = string.Empty;
             speechBubbleNpcAnimator.SetTrigger("Close");
+            
+            GameManager.SetGameStatus(GameStatus.Playing);
         }
         else
             StartCoroutine(ContinuePlayerDialogue());
@@ -147,6 +149,8 @@ public class DialogueManager : MonoBehaviour
         {
             playerDialogueText.text = string.Empty;
             speechBubblePlayerAnimator.SetTrigger("Close");
+            
+            GameManager.SetGameStatus(GameStatus.Playing);
         }
         else
             StartCoroutine (ContinueNpcDialogue());

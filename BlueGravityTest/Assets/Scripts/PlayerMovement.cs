@@ -20,6 +20,13 @@ public class PlayerMovement : MonoBehaviour
         Vector2 movement = new Vector2(horizontalInput, verticalInput);
         playerRB.velocity = movement * moveSpeed;
 
+        if (GameManager.CurrentGameStatus == GameStatus.Dialogue) // Check the game status
+        {
+            playerRB.velocity = Vector2.zero;
+            playerAnimator.Play("Rogue_idle_01");
+            return;
+        }
+
         if (movement.magnitude > 0.1f)
         {
             playerAnimator.Play("Rogue_walk_01");
