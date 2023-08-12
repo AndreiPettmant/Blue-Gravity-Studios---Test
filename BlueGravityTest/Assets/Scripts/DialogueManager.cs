@@ -11,6 +11,8 @@ public class DialogueManager : MonoBehaviour
     [Header("Dialogue Objects - TMP")]
     [SerializeField] private TextMeshProUGUI playerDialogueText;
     [SerializeField] private TextMeshProUGUI npcDialogueText;
+    [SerializeField] private AudioSource dialogueSound;
+    [SerializeField] private CameraFollow cameraFollow;
 
     [Header("Continue Buttons")]
     [SerializeField] private GameObject playerContinueButton;
@@ -34,6 +36,7 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(StartDialogue());
+        cameraFollow = FindObjectOfType<CameraFollow>();
     }
 
     public IEnumerator StartDialogue()
@@ -43,8 +46,11 @@ public class DialogueManager : MonoBehaviour
         if (playerSpeakingFirst)
         {
             speechBubblePlayerAnimator.SetTrigger("Open");
-            yield return new WaitForSeconds(speechBubbleAnimationDelay); 
+            yield return new WaitForSeconds(speechBubbleAnimationDelay);
+            cameraFollow.SetTarget(playerDialogueText.transform);
             StartCoroutine(TypePlayerDialogue());
+            
+            
         }
         else
         {
@@ -56,21 +62,35 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator TypePlayerDialogue()
     {
+        cameraFollow.SetTarget(playerDialogueText.transform);
+
+        GetRandomAudio();
+        dialogueSound.Play();
+
         foreach (char letter in playerDialoguesSentences[playerIndex].ToCharArray())
         {
             playerDialogueText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
+
+        dialogueSound.Stop();
         playerContinueButton.SetActive(true);
     }
 
     private IEnumerator TypeNpcDialogue()
     {
+        cameraFollow.SetTarget(npcDialogueText.transform);
+
+        GetRandomAudio();
+        dialogueSound.Play();
+
         foreach (char letter in npcDialoguesSentences[npcIndex].ToCharArray())
         {
             npcDialogueText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
+
+        dialogueSound.Stop();
         npcDialogueButton.SetActive(true);
     }
 
@@ -136,6 +156,7 @@ public class DialogueManager : MonoBehaviour
             speechBubbleNpcAnimator.SetTrigger("Close");
             
             GameManager.SetGameStatus(GameStatus.Playing);
+            cameraFollow.SetTarget(playerDialogueText.transform);
         }
         else
             StartCoroutine(ContinuePlayerDialogue());
@@ -149,10 +170,19 @@ public class DialogueManager : MonoBehaviour
         {
             playerDialogueText.text = string.Empty;
             speechBubblePlayerAnimator.SetTrigger("Close");
-            
+
             GameManager.SetGameStatus(GameStatus.Playing);
+            cameraFollow.SetTarget(playerDialogueText.transform);
         }
         else
-            StartCoroutine (ContinueNpcDialogue());
+            StartCoroutine(ContinueNpcDialogue());
     }
+
+    private AudioClip GetRandomAudio()
+    {
+        dialogueSound.time = Random.Range(0f, dialogueSound.clip.length);
+
+        return dialogueSound.clip;
+    }
+
 }
