@@ -25791,6 +25791,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 960065384371973621, guid: d03f1bbacf42f1148a9bc5f9719360e3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 960065384371973621, guid: d03f1bbacf42f1148a9bc5f9719360e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.13
       objectReference: {fileID: 0}
@@ -25833,6 +25837,14 @@ PrefabInstance:
     - target: {fileID: 963609918263356209, guid: d03f1bbacf42f1148a9bc5f9719360e3, type: 3}
       propertyPath: m_Name
       value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 1129787226272441869, guid: d03f1bbacf42f1148a9bc5f9719360e3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1129787228881603065, guid: d03f1bbacf42f1148a9bc5f9719360e3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3631203315402946961, guid: d03f1bbacf42f1148a9bc5f9719360e3, type: 3}
       propertyPath: panel
