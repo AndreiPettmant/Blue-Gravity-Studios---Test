@@ -46,6 +46,12 @@ public class AreaManager : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex);
     }
 
+    public void StayInArea()
+    {
+        panel.SetActive(false);
+        GameManager.SetGameStatus(GameStatus.Playing);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))

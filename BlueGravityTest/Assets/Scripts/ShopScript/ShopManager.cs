@@ -73,6 +73,8 @@ public class ShopManager : MonoBehaviour
             shopCoinsText.text = "Coins: " + totalCoins.ToString();
             sellButton.GetComponent<ItemInfo>().itemQuantity.text = sellButton.GetComponent<ItemInfo>().itemId.ToString();
         }
+
+        CheckButton();
     }
 
     public void CloseShop()
@@ -102,9 +104,13 @@ public class ShopManager : MonoBehaviour
             ItemInfo itemInfoComponent = buyButtons[i].GetComponent<ItemInfo>();
             Text itemQuantityText = itemInfoComponent.itemQuantity;
 
-            if (totalCoins >= itemPrice && itemQuantityText.text == "1")
+            if (totalCoins >= itemPrice)
             {
                 buyButtons[i].interactable = true;
+            }
+            else
+            {
+                buyButtons[i].interactable = false;
             }
         }
     }
